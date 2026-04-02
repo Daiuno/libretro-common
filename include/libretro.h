@@ -7839,6 +7839,49 @@ RETRO_API void *retro_get_memory_data(unsigned id);
  */
 RETRO_API size_t retro_get_memory_size(unsigned id);
 
+/* Amiibo support functions for 3DS cores */
+RETRO_API bool retro_load_amiibo(const char* path);
+RETRO_API bool retro_is_searching_amiibo(void);
+RETRO_API void retro_remove_amiibo(void);
+
+/* Software keyboard support for 3DS cores (Azahar) */
+struct retro_keyboard_config {
+    int button_config;      /* ButtonConfig: 0=Single, 1=Dual, 2=Triple, 3=None */
+    int accept_mode;        /* AcceptedInput: 0=Anything, 1=NotEmpty, 2=NotEmptyAndNotBlank, 3=NotBlank, 4=FixedLength */
+    bool multiline_mode;
+    int max_text_length;
+    int max_digits;
+    const char* hint_text;
+    const char** button_text;
+    int button_text_count;
+    /* Filters */
+    bool prevent_digit;
+    bool prevent_at;
+    bool prevent_percent;
+    bool prevent_backslash;
+    bool prevent_profanity;
+    bool enable_callback;
+};
+
+/**
+ * Callback invoked when the core needs keyboard input.
+ * Frontend should display a keyboard UI and call retro_keyboard_input() when done.
+ */
+typedef void (RETRO_CALLCONV *retro_keyboard_callback_t)(const struct retro_keyboard_config* config);
+
+/**
+ * Register a callback to be invoked when the core needs keyboard input.
+ * @param callback The callback function, or NULL to unregister.
+ */
+RETRO_API void retro_set_keyboard_callback(retro_keyboard_callback_t callback);
+
+/**
+ * Submit keyboard input to the core.
+ * @param text The text entered by the user, or NULL if cancelled.
+ * @param button The button pressed (0=Ok for Single, 0=Cancel/1=Ok for Dual, 0=Cancel/1=Forgot/2=Ok for Triple).
+ */
+RETRO_API void retro_keyboard_input(const char* text, int button);
+
 #ifdef __cplusplus
 }
 #endif
