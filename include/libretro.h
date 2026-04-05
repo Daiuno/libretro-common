@@ -7862,6 +7862,11 @@ RETRO_API void *retro_get_memory_data(unsigned id);
  */
 RETRO_API size_t retro_get_memory_size(unsigned id);
 
+/**
+ * Gets psp gameid
+ */
+RETRO_API const char* retro_get_psp_gameid(const char* romPath);
+
 #ifdef __cplusplus
 }
 #endif
