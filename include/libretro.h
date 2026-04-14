@@ -7905,6 +7905,8 @@ RETRO_API void retro_set_keyboard_callback(retro_keyboard_callback_t callback);
  */
 RETRO_API void retro_keyboard_input(const char* text, int button);
 
+RETRO_API void retro_install_cia(const char* path);
+
 #ifdef __cplusplus
 }
 #endif
