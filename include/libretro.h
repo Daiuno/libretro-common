@@ -7867,6 +7867,25 @@ RETRO_API size_t retro_get_memory_size(unsigned id);
  */
 RETRO_API const char* retro_get_psp_gameid(const char* romPath);
 
+/**
+ * Result struct for retro_install_psp_zip
+ */
+struct PSPZipInstallResult {
+    int success;          /* 1 for success, 0 for failure */
+    const char *title;    /* Game title from PARAM.SFO */
+    const char *gameID;   /* DISC_ID from PARAM.SFO */
+    const char *gamePath; /* Absolute path to installed EBOOT.PBP */
+    const void *iconData; /* ICON0.PNG raw data */
+    int iconSize;         /* Size of icon data in bytes */
+};
+
+/**
+ * Install a PSP PBP game from a zip file.
+ * @param zipPath Path to the zip file containing the PSP game
+ * @return Pointer to a static PSPZipInstallResult. Check success field.
+ */
+RETRO_API const struct PSPZipInstallResult* retro_install_psp_zip(const char* zipPath, const char* destDir);
+
 #ifdef __cplusplus
 }
 #endif
